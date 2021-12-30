@@ -4,8 +4,13 @@ from sense_hat import SenseHat
 import time, datetime
 import socket
 
+#Init vars
 sense = SenseHat()
+run_loop = True
+servo_h = 90 #id0
+servo_v = 90 #id1
 
+#Configure TCP connection and reset motor and servos
 TCP_IP = '192.168.5.232'
 TCP_PORT = 5000
 BUFFER_SIZE = 1024
@@ -13,11 +18,10 @@ MESSAGE = "CMD_MOTOR#0#0#0#0\n"
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
 s.send(MESSAGE.encode())
-
-run_loop = True
-
-servo_h = 90 #id0
-servo_v = 90 #id1
+MESSAGE = "CMD_SERVO#0#90\n"
+s.send(MESSAGE.encode())
+MESSAGE = "CMD_SERVO#1#90\n"
+s.send(MESSAGE.encode())
 
 
 while run_loop:
@@ -26,7 +30,8 @@ while run_loop:
     x = round(x,2)
     y = round(y,2)
     z = round(z,2)
-    
+
+    #calc pixel coords according to accelerometer values    
     x_pixel = int(x*4+4)
     y_pixel = int(y*4+4)
     if x_pixel > 7:
@@ -37,16 +42,18 @@ while run_loop:
         x_pixel = 0
     if y_pixel < 0:
         y_pixel = 0
-     
+    
+    #swap x and y and invert y to have same orientation like joystick   
     a = 0
     a = x
     x = y
     y = -a
   
-  
+    #set pixel 
     sense.clear()
     sense.set_pixel(x_pixel,y_pixel, (0, 255, 0))
     
+    #do not start moving under 0.2 value from accel  
     threshold = 0.2
     
     if x > -threshold and x < threshold:
@@ -59,9 +66,10 @@ while run_loop:
 
     s.send(MESSAGE.encode())
     
-    print("%s, %s, %s" %(x,y,z))
+    #print("%s, %s, %s" %(x,y,z))
     time.sleep(0.2)
-    
+   
+    #if joystick is moved move servos accordingly 
     for event in sense.stick.get_events():
         print(event.direction, event.action)
         if event.direction == "middle":
@@ -86,12 +94,14 @@ while run_loop:
                 servo_h = 180
             if servo_h < 0:
                 servo_h = 0
+            #if joystick is moved both servos will be set to right direction
             MESSAGE = "CMD_SERVO#1#" + str(servo_v) + "\n"
             s.send(MESSAGE.encode())
             MESSAGE = "CMD_SERVO#0#" + str(servo_h) + "\n"
             s.send(MESSAGE.encode())
      
 
+#reset motors and servos before exiting
 MESSAGE = "CMD_MOTOR#0#0#0#0\n"
 s.send(MESSAGE.encode())
 MESSAGE = "CMD_SERVO#0#90\n"
