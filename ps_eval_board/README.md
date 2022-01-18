@@ -1,6 +1,6 @@
 Simple evaluation board for raspberry pi (zero) with lib and schematics
 
-![ps_eval_board_Main](https://user-images.githubusercontent.com/80522869/150006973-fff88fe6-5061-4d83-9a23-f2686a20cfb9.gif)
+![ps_eval_board_Main](https://user-images.githubusercontent.com/80522869/150007262-9ea80cc1-ee29-4a51-9909-382d6093ace2.gif)
 
 And a possible board design
 
