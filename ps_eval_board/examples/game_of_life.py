@@ -9,8 +9,10 @@ Indicate cycles with leds [0,100,200,300]
 """
 
 import time
+import sys
 from random import randint
 from luma.core.render import canvas
+sys.path.append('../lib')
 from ps_eval_board import *
 import RPi.GPIO as GPIO
 
