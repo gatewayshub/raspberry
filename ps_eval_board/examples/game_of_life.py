@@ -79,9 +79,6 @@ def main():
                         bottom = top + scale
                         draw.rectangle((left, top, right, bottom), fill="white", outline="black")
 
-            #if i == 0:
-            #    time.sleep(0.1)
-
             board = apply_iteration(board)
             set_led(i)
 
