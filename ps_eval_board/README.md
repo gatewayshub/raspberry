@@ -19,7 +19,7 @@ get_device() -> returns oled device
 
 
 
-![ps_eval_board_Main](https://user-images.githubusercontent.com/80522869/150007262-9ea80cc1-ee29-4a51-9909-382d6093ace2.gif)
+![ps_eval_board_Main](https://user-images.githubusercontent.com/80522869/150009399-3bbaa27f-5e41-42d3-8829-c8e080c68634.gif)
 
 And a possible board design
 
