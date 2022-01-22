@@ -4,7 +4,7 @@ Lib wurde von https://github.com/waveshare/e-Paper verwendet und kann für ander
 
 Usage:  
 ./update_wisdom.py arg  
-#arg: 0 - 9 zen wisdom with specified index... 10 random wisdom will be selected  
+#arg: 0 - 9 zen wisdom with specified index... 10 random wisdom will be selected (without arg newest zen wisdom is fetched)
 
 Möglicher Aufbau:  
 
